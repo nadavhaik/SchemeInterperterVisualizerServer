@@ -1290,7 +1290,7 @@ module Parser : PARSER = struct
       | ScmLambda (params', Opt opt, expr) -> (*our code*)
         let new_env = List.append [params] env in 
         let new_params = List.append params' [opt] in 
-        ScmLambda' (params', Simple,run expr new_params new_env)
+        ScmLambda' (params', Opt opt,run expr new_params new_env)
       | ScmApplic (proc, args) ->
         ScmApplic' (run proc params env,
                     List.map (fun arg -> run arg params env) args,
@@ -1506,7 +1506,7 @@ module Parser : PARSER = struct
           | [], _ -> new_body
           | _, ScmSeq' exprs -> ScmSeq' (new_sets @ exprs)
           | _, _ -> ScmSeq'(new_sets @ [new_body]) in
-        ScmLambda' (params, Simple, new_body)
+        ScmLambda' (params, Opt opt, new_body)
     | ScmApplic' (proc, args, app_kind) ->
       ScmApplic' (auto_box proc, List.map auto_box args, app_kind);;
 
