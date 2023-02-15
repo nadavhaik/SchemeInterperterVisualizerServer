@@ -76,7 +76,7 @@ def convert_pair(ocaml_pair) -> ScmPair:
     car = ocaml_pair.f0[0]
     cdr = ocaml_pair.f0[1]
 
-    return TaggedPair((convert_sexp(car), convert_sexp(cdr)))
+    return convert_sexp(car), convert_sexp(cdr)
 
 
 def convert_sexp(ocaml_sexp) -> SExp:
@@ -137,12 +137,12 @@ def convert_scm_if(ocaml_scm_if) -> ScmIf:
 
 def convert_scm_seq(ocaml_scm_seq) -> ScmSeq:
     exprs = ocaml_scm_seq.f0
-    return ScmSeq(TaggedList([convert_expr(exp) for exp in exprs]))
+    return ScmSeq([convert_expr(exp) for exp in exprs])
 
 
 def convert_scm_or(ocaml_scm_or) -> ScmOr:
     exprs = ocaml_scm_or.f0
-    return ScmOr(TaggedList([convert_expr(exp) for exp in exprs]))
+    return ScmOr([convert_expr(exp) for exp in exprs])
 
 
 def convert_scm_var_set(ocaml_var_set) -> ScmVarSet:
